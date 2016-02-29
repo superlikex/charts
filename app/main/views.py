@@ -1,5 +1,6 @@
 from flask import render_template,session,redirect,url_for,flash
 import random
+from datetime import datetime
 
 from .. import db
 from . import main
@@ -18,7 +19,9 @@ def index():
 	if form.validate_on_submit():	
 		session['group_id'] = form.group_id.data
 		return redirect(url_for('.result',group_id = session.get('group_id')))
-	history = User.query.filter(result != 0).all()
+	history = User.query.order_by(User.ballot_time.desc()).all()
+#	history = User.query.order_by(User.ballot_time.desc()).filter(id>2)
+#	history = User.query.filter(id>2)
 	return render_template('index.html',form = form,history=history)
 
 @main.route('/result',methods=['GET','POST'])
@@ -30,6 +33,7 @@ def result():
 		while User.query.filter_by(result=a).first():
 			a = random.randint(1,7)
 		group.result = a #a , 0
+		group.ballot_time = datetime.utcnow()
 		db.session.add(group)
 		flash("Succeed.")
 	else:

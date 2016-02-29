@@ -5,17 +5,27 @@
 
 {% block page_content %}
 <div class="page-header">
-	<h1>Hello</h1>
+	<h1>抽吧</h1>
 </div>
 {{ wtf.quick_form(form) }}
 </br>
 </br>
-<ul class="posts">
+	<h2>历史记录：</h2>
 	{% for post in history %}
+	{% if post.result %}
 	<ul class="post">
-		{{ post.username }} {{post.ballot_time}}
+		<p>{{ post.username }} 课题{{ post.result%2+1 }} {{ moment(post.ballot_time).format('LLL')}}.</p>
 			
 	</ul>
+	{% endif %}
 	{% endfor %}
-</ul>
+
+	<h2>未抽小组：</h2>
+	{% for post in history %}
+	{% if not post.result %}
+	<ul class="post">
+		<p>{{post.username}}</p>
+	</ul>
+	{% endif %}	
+	{% endfor %}
 {% endblock %}
