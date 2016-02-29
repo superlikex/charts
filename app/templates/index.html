@@ -8,4 +8,14 @@
 	<h1>Hello</h1>
 </div>
 {{ wtf.quick_form(form) }}
+</br>
+</br>
+<ul class="posts">
+	{% for post in history %}
+	<ul class="post">
+		{{ post.username }} {{post.ballot_time}}
+			
+	</ul>
+	{% endfor %}
+</ul>
 {% endblock %}
