@@ -11,7 +11,7 @@ class User(db.Model):
 	@staticmethod
 	def insert_users():
 		users = {
-			'a':0,
+			'李巅峰':0,
 			'b':0,
 			'c':0,
 			'd':0,
