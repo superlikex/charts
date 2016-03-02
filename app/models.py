@@ -10,6 +10,14 @@ class User(db.Model):
 	ballot_time = db.Column(db.DateTime(),default=datetime.utcnow)
 
 	@staticmethod
+	def delete_users():
+		users = User.query.all()
+		for user in users:	
+			db.session.delete(user)
+		db.session.commit()
+			
+			
+	@staticmethod
 	def insert_users():
 		users = {
 			'李巅峰':0,
