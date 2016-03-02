@@ -20,13 +20,13 @@ class User(db.Model):
 	@staticmethod
 	def insert_users():
 		users = {
-			'李巅峰':0,
-			'b':0,
-			'c':0,
-			'd':0,
-			'e':0,
-			'f':0,
-			'g':0
+			'郑南组':0,
+			'陈越组':0,
+			'戴翔组':0,
+			'祁志组':0,
+			'赵辉组':0,
+			'袁凯组':0,
+			'陈斌组':0
 	}
 		for u in users:
 			user = User.query.filter_by(username=u).first()
