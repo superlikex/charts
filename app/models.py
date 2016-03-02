@@ -20,7 +20,7 @@ class User(db.Model):
 			'g':0
 	}
 		for u in users:
-			user = User.query.filter_by(name=u).first()
+			user = User.query.filter_by(username=u).first()
 			if user is None:
 				user = User(username=u)
 			user.result = 0
