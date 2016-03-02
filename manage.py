@@ -14,6 +14,7 @@ def deploy():
 	from flask.ext.migrate import upgrade
 	from app.models import User
 	upgrade()
+	User.insert_users()	
 
 def make_shell_context():
 	return dict(app=app,db=db,User=User)

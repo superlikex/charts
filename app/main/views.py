@@ -35,6 +35,7 @@ def result():
 		group.result = a #a , 0
 		group.ballot_time = datetime.utcnow()
 		db.session.add(group)
+		db.session.commit()
 		flash("Succeed.")
 	else:
 		flash("Your group had have balloted!")
