@@ -14,9 +14,9 @@ def index():
 #	form = NameForm(request.Post,obj=user)
 	form = NameForm()
 #	user = User.query.get(id)
-#	form.group_id.choices= [(g.id,g.username) for g in User] 
+#	form.group_id.choices= [(g.id,g.username) for g in User]
 #	form.group_id.choices += [(g.id,g.username) for g in User]
-	if form.validate_on_submit():	
+	if form.validate_on_submit():
 		session['group_id'] = form.group_id.data
 		return redirect(url_for('.result',group_id = session.get('group_id')))
 	history = User.query.order_by(User.ballot_time.desc()).all()
@@ -38,5 +38,11 @@ def result():
 		db.session.commit()
 		flash("Succeed.")
 	else:
-		flash("Your group had have balloted!")
-	return render_template('result.html',group_id = group.result%2+1)
+        flash("Your group have had balloted!")
+    if group.result < 4:
+        res = 1
+    elif group.result > 5:
+        res = 3
+    else :
+        res = 2
+	return render_template('result.html',group_id = res)
