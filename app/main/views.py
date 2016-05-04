@@ -39,6 +39,4 @@ def result():
 		flash("Succeed.")
 	else:
         flash("Your group have had balloted!")
-    if group.result <8:
-        res = 3
-	return render_template('result.html',group_id =res)
+	return render_template('result.html',group_id =3)
