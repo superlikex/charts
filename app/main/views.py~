@@ -39,10 +39,6 @@ def result():
 		flash("Succeed.")
 	else:
 		flash("Your group have had balloted!")
-	if 0< group.result <4:
-		res = 1
-	elif group.result >5:
-		res = 3
-	elif 3 < group.result<6:
-		res = 2
+    if group.result <8:
+        res = 4
 	return render_template('result.html',group_id =res)
