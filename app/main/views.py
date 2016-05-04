@@ -13,7 +13,6 @@ from ..models import User
 def index():
 #	user = User.query.get(id)
 #	form = NameForm(request.Post,obj=user)
-	flash("研讨8-1-2中的分词工具小组自由选择至少１个组别进行")
 	form = NameForm()
 #	user = User.query.get(id)
 #	form.group_id.choices= [(g.id,g.username) for g in User]
