@@ -14,7 +14,7 @@
 	{% for post in history %}
 	{% if post.result %}
 	<ul class="post">
-		<p>{{ post.username }} 课题{% if post.result < 4 %}1{% endif%} {% if post.result > 5 %}3{% endif%}{% if 4 < post.result < 6 %}2{% endif%}{{ moment(post.ballot_time).format('LLL')}}.</p>
+		<p>{{ post.username }} 课题{{ post.result%2+1 }} {{ moment(post.ballot_time).format('LLL')}}.</p>
 			
 	</ul>
 	{% endif %}
