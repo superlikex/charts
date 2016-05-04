@@ -38,11 +38,5 @@ def result():
 		db.session.commit()
 		flash("Succeed.")
 	else:
-        flash("Your group have had balloted!")
-    if group.result < 4:
-        res = 1
-    elif group.result > 5:
-        res = 3
-    else :
-        res = 2
-	return render_template('result.html',group_id = res)
+		flash("Your group had have balloted!")
+	return render_template('result.html',group_id = group.result%2+1)
