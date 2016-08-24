@@ -17,9 +17,10 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
 		'sqlite:///' + os.path.join(basedir,'data.sqlite')
-
+class DevelopmentConfig2(Config):
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:nsi-xu811@210.28.188.98/mqttai'
 config = {
 	'development':DevelopmentConfig,
 	'production':ProductionConfig,
-	'default':ProductionConfig
+    'default':DevelopmentConfig2
 }

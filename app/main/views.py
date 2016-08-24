@@ -1,49 +1,41 @@
 #-*-coding:utf-8-*-
-from flask import render_template,session,redirect,url_for,flash
+from flask import render_template,session,redirect,url_for,flash,jsonify
 import random
 from datetime import datetime
 
 from .. import db
 from . import main
-from .forms import NameForm
-from ..models import User
+from ..models import MQTT_LOG
 
 
-@main.route('/',methods=['GET','POST'])
+@main.route('/',methods=['GET'])
 def index():
-#	user = User.query.get(id)
-#	form = NameForm(request.Post,obj=user)
-	form = NameForm()
-#	user = User.query.get(id)
-#	form.group_id.choices= [(g.id,g.username) for g in User]
-#	form.group_id.choices += [(g.id,g.username) for g in User]
-	if form.validate_on_submit():
-		session['group_id'] = form.group_id.data
-		return redirect(url_for('.result',group_id = session.get('group_id')))
-	history = User.query.order_by(User.ballot_time.desc()).all()
-#	history = User.query.order_by(User.ballot_time.desc()).filter(id>2)
-#	history = User.query.filter(id>2)
-	return render_template('index.html',form = form,history=history)
+ #   test = ORP.query.all()
 
-@main.route('/result',methods=['GET','POST'])
-def result():
-	group_id = session.get('group_id')
-	group = User.query.get_or_404(group_id)
-	if group.result == 0:
-		a = random.randint(1,7)
-		while User.query.filter_by(result=a).first():
-			a = random.randint(1,7)
-		group.result = a #a , 0
-		group.ballot_time = datetime.utcnow()
-		db.session.add(group)
-		db.session.commit()
-		flash("Succeed.")
-	else:
-		flash("Your group have had balloted!")
-	if 0< group.result <4:
-		res = 1
-	elif group.result >5:
-		res = 3
-	elif 3 < group.result<6:
-		res = 2
-	return render_template('result.html',group_id =res)
+    return render_template('index.html')
+
+#@main.route('/test',methods=['GET','POST'])
+#def test():
+#    test = ORP.query.all()
+#    return render_template('test.html',test =test)
+
+@main.route('/orp',methods=['GET','POST'])
+def orp():
+    data = MQTT_LOG.query.filter_by(topic='orp').order_by("id desc").limit(100)#.all()
+    return render_template('orp.html',data = data)
+
+@main.route('/orp_temp',methods=['GET','POST'])
+def orp_temp():
+    data = MQTT_LOG.query.filter_by(topic='orp_temp').order_by("id desc").limit(100)
+    return render_template('orp_temp.html',data = data)
+
+@main.route('/ph',methods=['GET','POST'])
+def ph():
+    data = MQTT_LOG.query.filter_by(topic='ph').order_by("id desc").limit(100)
+    return render_template('ph.html',data = data)
+
+#@main.route('/ajax',methods=['GET','POST'])
+#def ajax():
+   # te = Test.query.all()
+
+  #  return render_template('ajax.html',tt=te[0].id)

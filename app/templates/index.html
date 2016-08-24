@@ -1,31 +1,10 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}ballot{% endblock %}
+{% block title %}首页{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
-	<h1>抽吧</h1><p>(研讨8-1-2中的分词工具小组自行选择至少一个组别研讨)</p>
+    <h1>水产物联数据采集系统</h1>
 </div>
-{{ wtf.quick_form(form) }}
-</br>
-</br>
-	<h2>历史记录：</h2>
-	{% for post in history %}
-	{% if post.result %}
-	<ul class="post">
-		<p>{{ post.username }} 课题{% if post.result < 4 %}1 {% endif%}{% if post.result > 5 %}3 {% endif%}{% if 3 < post.result < 6 %}2  {% endif%}{{ moment(post.ballot_time).format('LLL')}}.</p>
-			
-	</ul>
-	{% endif %}
-	{% endfor %}
-
-	<h2>未抽小组：</h2>
-	{% for post in history %}
-	{% if not post.result %}
-	<ul class="post">
-		<p>{{post.username}}</p>
-	</ul>
-	{% endif %}	
-	{% endfor %}
 {% endblock %}
