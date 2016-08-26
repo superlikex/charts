@@ -54,19 +54,19 @@
     </div>
   </div>
 
-  <a name = "pic1"></a>
+  <a name = "pic1">1</a>
   <div id="orp" style="height:500px;">
   </div>
   <a href = "#"><span>回到顶部</span></a>
 
   <br><br><hr/><br>
-    <a name = "pic2"></a>
+    <a name = "pic2">2</a>
   <div id="orp_temp" name = "pic2" style="height:500px">
   </div>
   <a href = "#"><span>回到顶部</span></a>
 
   <br><br><hr/><br>
-    <a name = "pic3"></a>
+    <a name = "pic3">3</a>
   <div id="ph" name = "pic3" style="height:400px">
   </div>
   <a href = "#"><span>回到顶部</span></a>
