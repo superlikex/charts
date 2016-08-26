@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type = "text/css">
+	span{position:absolute;color：#1bbc9b;font-size:14px;right:10%;}
+  </style>
+  <title></title>
+  <link href="{{ url_for('static',filename='css/bootstrap.min.css',_external=True) }}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='css/style.css',_external=True) }}" rel="stylesheet">
+ <script type="text/javascript" src="{{ url_for('static', filename='echarts.js',_external=True) }}"></script>
+ <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js',_external=True) }}"></script>
+ <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js',_external=True) }}"></script>
+</head>
+<body>
+<div class="container" >
+  <!-- 导航栏 -->
+  <div class="row" style="margin-top:10px;">
+    <div class="col-md-2 col-xs-12">
+      <img src="{{ url_for('static',filename='imgs/iscas_logo.png') }}" style="display:block"/>
+    </div>
+    <div class="col-md-7">
+      <ul class="nav nav-tabs">
+        <li class="">
+        <a href="#pic1">溶解氧</a>
+        </li>
+        <li class="">
+        <a href="#pic2">水温</a>
+        </li>
+        <li class="">
+        <a href="#pic3">酸碱度</a>
+        </li>
+      </ul>
+    </div>
+    
+  <br/>
+  <!-- 内容区域 -->
+  <!-- 瀑布区域 -->
+  <div class="row" style="background-color:#FFFFFF;margin-top:30px;">
+    <div class="jumbotron">
+      <h2 id="jump_title">
+        水产物联数据采集平台
+      </h2>
+      <br>
+      <p id="content">
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp通过远程终端设备及各类传感器采集环境数据，使用mqtt协议进行数据的传送，实现数据的存储分析以及可视化。
+      </p>
+      <p>
+        <br/>
+        <a class="btn btn-primary btn-large" href="">了解更多</a>
+      </p>
+    </div>
+  </div>
+
+  <div id="orp" style="height:500px;">
+  <a name = "pic1"></a>
+  </div>
+  <a href = "#"><span>回到顶部</span></a>
+
+  <br><br><hr/><br>
+  <div id="orp_temp" name = "pic2" style="height:500px">
+    <a name = "pic2"></a>
+  </div>
+  <a href = "#"><span>回到顶部</span></a>
+
+  <br><br><hr/><br>
+  <div id="ph" name = "pic3" style="height:400px">
+    <a name = "pic3"></a>
+  </div>
+  <a href = "#"><span>回到顶部</span></a>
+
+</div>
+
+
+<script>
+  $('a').css({
+    "font-height":"bold",
+    "font-size":"large",
+    "font-family":"SimHei"
+  });
+  $('#jump_title').css("font-family","SimHei");
+  $('#content').css({"font-size":"medium","font-style":"italic"});
+</script>
+<script type="text/javascript">
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('orp'));
+var date = [];
+var data = [];
+{% for num in data_orp[::-1] %}
+data.push(parseFloat('{{num.payload}}'))
+date.push(['{{num.msgdate}}','{{num.msgtime}}'].join('/'))
+{% endfor%}
+
+option = {
+    tooltip: {
+        trigger: 'axis',
+        position: function (pt) {
+            return [pt[0], '10%'];
+        }
+    },
+    title: {
+        left: 'center',
+              text: '溶解氧历史数据统计图',
+    },
+    legend: {
+        top: 'bottom',
+        data:['意向']
+    },
+    toolbox: {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: date
+    },
+    yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%']
+    },
+    dataZoom: [{
+        type: 'inside',
+        start: 0,
+        end: 100
+    }, {
+        start: 0,
+        end: 10,
+        handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+        handleSize: '80%',
+        handleStyle: {
+            color: '#fff',
+            shadowBlur: 3,
+            shadowColor: 'rgba(0, 0, 0, 0.6)',
+            shadowOffsetX: 2,
+            shadowOffsetY: 2
+        }
+    }],
+    series: [
+        {
+            name:'溶解氧(mg/L)',
+            type:'line',
+            smooth:true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                normal: {
+                    color: 'rgb(255, 70, 131)'
+                }
+            },
+            areaStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+offset: 0,
+                        color: 'rgb(255, 158, 68)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(255, 70, 131)'
+                    }])
+                }
+            },
+            data: data,
+	        markLine : {
+                data : [
+                    {type : 'average', name : '平均值'}
+                ]
+            }
+
+        }
+    ]
+}; 
+// 使用刚指定的配置项和数据显示图表。
+myChart.setOption(option);
+</script>
+<script type="text/javascript">
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('orp_temp'));
+var date = [];
+var data = [];
+{% for num in data_temp[::-1] %}
+data.push(parseFloat('{{num.payload}}'))
+date.push(['{{num.msgdate}}','{{num.msgtime}}'].join('/'))
+{% endfor%}
+
+option = {
+    tooltip: {
+        trigger: 'axis',
+        position: function (pt) {
+            return [pt[0], '10%'];
+        }
+    },
+    title: {
+        left: 'center',
+              text: '水温数据历史统计图',
+    },
+    legend: {
+        top: 'bottom',
+        data:['意向']
+    },
+    toolbox: {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: date
+    },
+    yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%']
+    },
+    dataZoom: [{
+        type: 'inside',
+        start: 0,
+        end: 100
+    }, {
+        start: 0,
+        end: 10,
+        handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+        handleSize: '80%',
+        handleStyle: {
+            color: '#fff',
+            shadowBlur: 3,
+            shadowColor: 'rgba(0, 0, 0, 0.6)',
+            shadowOffsetX: 2,
+            shadowOffsetY: 2
+        }
+    }],
+    series: [
+        {
+name:'水温(℃)',
+            type:'line',
+            smooth:true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                normal: {
+                    color: 'rgb(255, 70, 131)'
+                }
+            },
+            areaStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgb(255, 158, 68)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(255, 70, 131)'
+                    }])
+                }
+            },
+            data: data,
+	        markLine : {
+                data : [
+                    {type : 'average', name : '平均值'}
+                ]
+            }
+        }
+    ]
+}; 
+// 使用刚指定的配置项和数据显示图表。
+myChart.setOption(option);
+</script>
+<script type="text/javascript">
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('ph'));
+var date = [];
+var data = [];
+{% for num in data_ph[::-1] %}
+data.push(parseFloat('{{num.payload}}'))
+date.push(['{{num.msgdate}}','{{num.msgtime}}'].join('/'))
+{% endfor%}
+
+option = {
+    tooltip: {
+        trigger: 'axis',
+        position: function (pt) {
+            return [pt[0], '10%'];
+        }
+    },
+    title: {
+        left: 'center',
+              text: 'PH值历史数据统计图',
+    },
+    legend: {
+        top: 'bottom',
+        data:['意向']
+    },
+    toolbox: {
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: date
+    },
+    yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%']
+    },
+    dataZoom: [{
+        type: 'inside',
+        start: 0,
+        end: 100
+    }, {
+        start: 0,
+        end: 10,
+        handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+        handleSize: '80%',
+        handleStyle: {
+            color: '#fff',
+            shadowBlur: 3,
+            shadowColor: 'rgba(0, 0, 0, 0.6)',
+            shadowOffsetX: 2,
+            shadowOffsetY: 2
+        }
+    }],
+    series: [
+        {
+            name:'PH',
+            type:'line',
+            smooth:true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                normal: {
+                    color: 'rgb(255, 70, 131)'
+                }
+            },
+            areaStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgb(255, 158, 68)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(255, 70, 131)'
+                    }])
+                }
+            },
+            data: data,
+	        markLine : {
+                data : [
+                    {type : 'average', name : '平均值'}
+                ]
+            }
+        }
+    ]
+}; 
+// 使用刚指定的配置项和数据显示图表。
+myChart.setOption(option);
+</script>
+
+
+</body>
+</html>

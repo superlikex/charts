@@ -8,17 +8,20 @@ from . import main
 from ..models import MQTT_LOG
 
 
-@main.route('/',methods=['GET'])
-def index():
- #   test = ORP.query.all()
-
+@main.route('/hahaa',methods=['GET'])
+def hahaa():
     return render_template('index.html')
 
 #@main.route('/test',methods=['GET','POST'])
 #def test():
 #    test = ORP.query.all()
 #    return render_template('test.html',test =test)
-
+@main.route('/',methods=['GET'])
+def index():
+    data_orp = MQTT_LOG.query.filter_by(topic='orp').order_by("id desc").limit(100)#.all()
+    data_temp = MQTT_LOG.query.filter_by(topic='orp_temp').order_by("id desc").limit(100)
+    data_ph = MQTT_LOG.query.filter_by(topic='ph').order_by("id desc").limit(100)
+    return render_template("main.html",data_orp=data_orp,data_temp=data_temp,data_ph=data_ph)
 @main.route('/orp',methods=['GET','POST'])
 def orp():
     data = MQTT_LOG.query.filter_by(topic='orp').order_by("id desc").limit(100)#.all()

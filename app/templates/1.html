@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type = "text/css">
+	span{position:absolute;color：#1bbc9b;font-size:14px;right:10%;}
+  </style>
+  <title></title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>	
+</head>
+<body>
+<div class="container" >
+  <!-- 导航栏 -->
+  <div class="row" style="margin-top:10px;">
+    <div class="col-md-2 col-xs-12">
+      <img src="imgs/iscas_logo.png" style="display:block"/>
+    </div>
+    <div class="col-md-7">
+      <ul class="nav nav-tabs">
+        <li class="">
+          <a href="#pic1">1yyyyyy</a>
+        </li>
+        <li class="">
+          <a href="#pic2">2</a>
+        </li>
+        <li class="">
+          <a href="#pic3">3</a>
+        </li>
+        <li class="">
+          <a href="#pic4">4</a>
+        </li>
+      </ul>
+    </div>
+    
+  <br/>
+  <!-- 内容区域 -->
+  <!-- 瀑布区域 -->
+  <div class="row" style="background-color:#FFFFFF;margin-top:30px;">
+    <div class="jumbotron">
+      <h2 id="jump_title">
+        江苏农业科技云平台服务
+      </h2>
+      <br>
+      <p id="content">
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp实现"1+N"的农业科技综合服务平台，通过农业综合服务大数据平台，开发了N个支撑业务系统，通过多应用终端实现平台的无缝接入，实现了一整套在线农业科技推广服务！
+      </p>
+      <p>
+        <br/>
+        <a class="btn btn-primary btn-large" href="">了解更多</a>
+      </p>
+    </div>
+  </div>
+  <!-- 放置展示效果 -->
+  <!-- 推广员分布图 -->
+  <div id="main" style="height:500px; background:red;">
+  <a name = "pic1"></a>
+  </div>
+  <a href = "#"><span>回到顶部</span></a>
+  <br><br><hr/><br>
+  <!-- 南京市各区农技推广任务 -->
+  <div id="nanjing" name = "pic2" style="height:500px">
+    <a name = "pic2"></a>
+  </div>
+  <a href = "#"><span>回到顶部</span></a>
+  <br><br><hr/><br>
+  <!-- 南京市各区农技推广任务————柱状图 -->
+  <div id="nanjing_work" name = "pic3" style="height:400px">
+    <a name = "pic3"></a>
+  </div>
+  <a href = "#"><span>回到顶部</span></a>
+  <br><br><hr/><br>
+  <!-- 用户数据统计报表-->
+  <div id="PersonFlu" name = "pic4" style="height: 400px">
+    <a name = "pic4"></a>
+  </div>
+  <a href = "#"><span>回到顶部</span></a>
+</div>
+
+
+<script>
+  $('a').css({
+    "font-height":"bold",
+    "font-size":"large",
+    "font-family":"SimHei"
+  });
+  $('#jump_title').css("font-family","SimHei");
+  $('#content').css({"font-size":"medium","font-style":"italic"});
+</script>
+
+</body>
+</html>
